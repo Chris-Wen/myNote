@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="target">
+        <li>
+            <div class="hd">韩梅梅的基本信息</div>
+            <div class="bd">
+                <p>性别：girl</p>
+                <p>年龄：18</p>
+            </div>
+        </li>
+    </ul>
+</body>
+
+<script>
+    let data = [
+        { name: '韩梅梅', age: 18, sex: 'girl' },
+        { name: '李雷', age: 19, sex: 'boy' },
+        { name: '张三', age: 25, sex: 'man' },
+    ]
+
+    let fragment = '';
+    /*     
+        //方法1
+        fragment = document.createDocumentFragment()
+        for (let i = 0; i < data.length; i++) {
+            const _d = data[i];
+            let li = document.createElement('li')
+    
+            let [div1, div2] = [document.createElement('div'), document.createElement('div')]
+            let p1 = document.createElement('p')
+            let p2 = document.createElement('p')
+            div1.className = 'hd'
+            div1.innerText = _d.name + '的基本信息'
+            li.appendChild(div1)
+    
+            div2.className = 'bd'
+            p1.innerText = '性别：' + _d.sex
+            p2.innerText = '年龄：' + _d.age
+            div2.appendChild(p1)
+            div2.appendChild(p2)
+            li.appendChild(div2)
+    
+            fragment.appendChild(li)
+        } 
+        
+        document.getElementById('target').appendChild(fragment)
+    */
+
+    /*      
+        //方法二
+        data.map(item => {
+            fragment += [
+                '<li>',
+                '    <div class="hd">' + item.name + '的基本信息</div>',
+                '    <div class="bd">',
+                '        <p>性别：' + item.sex + '</p>',
+                '        <p>年龄：' + item.age + '</p>',
+                '    </div>',
+                '</li>'
+            ].join('')
+
+            // fragment += ` <li>
+            //     <div class="hd"> ${item.name}的基本信息</div>
+            //     <div class="bd">
+            //         <p>性别： ${item.sex}</p>
+            //         <p>年龄： ${item.age} </p>
+            //     </div>
+            // </li>`
+        })
+        document.getElementById('target').innerHTML = fragment 
+    */
+</script>
+<script type="text/template" id="template">
+    <<#data>>
+    <li>
+        <div class="hd"><<name>>的基本信息</div>
+        <div class="bd">
+            <p>性别：<<sex>></p>
+            <p>年龄：<<age>></p>
+        </div>
+    </li>
+    <</data>>
+</script>
+<script type="module">
+    import Mustache from 'https://cdn.bootcdn.net/ajax/libs/mustache.js/4.2.0/mustache.min.js'
+    console.log(Mustache);
+
+    //使用 script 标签定义text/javascript才解析js，定义text/template 存储模板字符串
+    Mustache.tags = ["<<", ">>"]
+    let _html = Mustache.render(document.getElementById('template').innerHTML, { data })
+    document.getElementById('target').innerHTML = _html
+
+    console.log(Mustache.templateCache);
+</script>
+</html>
