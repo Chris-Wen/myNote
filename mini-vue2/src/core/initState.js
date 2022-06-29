@@ -37,9 +37,9 @@ function initData(vm) {
 
   while (i--) {
     const key = keys[i];
-    if (process.env.NODE_ENV !== "production") {
-      //非生产环境 方法名与data中的key重名的冲突提示
-    }
+    // if (process.env.NODE_ENV !== "production") {
+    //   //非生产环境 方法名与data中的key重名的冲突提示
+    // }
     if (props && props.hasOwnProperty(key)) {
       //props与data key同名冲突警告
     } else {
@@ -113,11 +113,11 @@ function Observer(value) {
     methodsToPatch.forEach(function (method) {
       // cache original method
       const original = arrayProto[method];
-      arrayMethods[method]
+      arrayMethods[method];
     });
 
-
-   value.__proto__ = arrayMethods
+    value.__proto__ = arrayMethods;
+  }
 }
 
 function defineReactive(target, key, value) {
