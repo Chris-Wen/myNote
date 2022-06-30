@@ -104,14 +104,55 @@ function defineReactive(obj, key, value) {
   });
 }
 
+//---- Dep
+
 let uid = 0;
 function Dep() {
   this.id = uid++;
   this.subs = [];
 }
-Dep.addSub = function (sub) {
+Dep.prototype.addSub = function (sub) {
   this.subs.push(sub);
 };
-Dep.removeSub = function (sub) {
-  remove;
+Dep.prototype.removeSub = function (sub) {
+  // remove;
 };
+Dep.prototype.depend = function () {
+  if (Dep.target) {
+    Dep.target.addDep(this);
+  }
+};
+Dep.prototype.notify = function () {
+  const subs = this.subs.slice();
+  for (let i = 0; i < subs.length; i++) {
+    subs[i].update();
+  }
+};
+
+/* Dep 是一个 Class，它定义了一些属性和方法，
+这里需要特别注意的是它有一个静态属性 target，
+这是一个全局唯一 Watcher，这是一个非常巧妙的设计，
+因为在同一时间只能有一个全局的 Watcher 被计算，
+另外它的自身属性 subs 也是 Watcher 的数组 */
+Dep.target = null;
+
+const targetStack = [];
+
+function pushTarget(watcher) {
+  if (Dep.target) targetStack.push(Dep.target);
+  Dep.target = watcher;
+}
+
+function popTarget() {
+  Dep.target = targetStack.pop();
+}
+
+// Dep 实际上就是对 Watcher 的一种管理，Dep 脱离 Watcher 单独存在是没有意义的
+//--- Watcher
+function Watcher(vm) {
+  this.vm = vm;
+}
+
+Watcher.prototype.get = function () {};
+Watcher.prototype.addDep = function () {};
+Watcher.prototype.cleanupDeps = function () {};
