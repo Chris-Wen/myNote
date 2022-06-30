@@ -80,19 +80,6 @@ function Observer(value) {
     this.walk(value);
   }
 
-  Observer.prototype.walk = function (value) {
-    for (const key in value) {
-      defineReactive(value, key, value[key]);
-    }
-  };
-
-  Observer.prototype.observeArray = function (value) {
-    //数组子项响应式
-    for (const key in value) {
-      observe(value[key]);
-    }
-  };
-
   function protoNewArrProto(value) {
     const arrayProto = Array.prototype;
     const arrayMethods = Object.create(arrayProto);
@@ -120,7 +107,21 @@ function Observer(value) {
   }
 }
 
+Observer.prototype.walk = function (value) {
+  for (const key in value) {
+    defineReactive(value, key, value[key]);
+  }
+};
+
+Observer.prototype.observeArray = function (value) {
+  //数组子项响应式
+  for (const key in value) {
+    observe(value[key]);
+  }
+};
+
 function defineReactive(target, key, value) {
+  observe(value);
   Object.defineProperty(target, key, {
     get: function () {
       return value;

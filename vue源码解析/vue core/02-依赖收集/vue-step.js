@@ -73,9 +73,23 @@ function observe(value) {
 }
 
 function defineReactive(obj, key, value) {
+  //实例化dep
+  const dep = new Dep();
+
   observe(value);
   Object.defineProperty(obj, key, {
     get: function () {
+      if (Dep.target) {
+        //依赖收集
+        dep.depend();
+        if (childOb) {
+          childOb.dep.depend();
+          if (Array.isArray(value)) {
+            dependArray(value);
+          }
+        }
+      }
+
       return value;
     },
     set: function (newVal) {
@@ -89,3 +103,15 @@ function defineReactive(obj, key, value) {
     },
   });
 }
+
+let uid = 0;
+function Dep() {
+  this.id = uid++;
+  this.subs = [];
+}
+Dep.addSub = function (sub) {
+  this.subs.push(sub);
+};
+Dep.removeSub = function (sub) {
+  remove;
+};
