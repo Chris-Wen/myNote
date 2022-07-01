@@ -64,11 +64,21 @@ function observe(value) {
   if (typeof value !== "object" || value === null) {
     return;
   }
+  let ob = new Observer(value);
+
+  return ob;
+}
+
+function Observer(value) {
+  this.value = value;
+  this.dep = new Dep();
+
   if (Array.isArray(value)) {
     value.__proto__ = arrayMethods;
-  }
-  for (const key in value) {
-    defineReactive(value, key, value[key]);
+  } else {
+    for (const key in value) {
+      defineReactive(value, key, value[key]);
+    }
   }
 }
 
@@ -151,6 +161,10 @@ function popTarget() {
 //--- Watcher
 function Watcher(vm) {
   this.vm = vm;
+  this.deps = []; //watcher实例持有的Dep实例的数组
+  this.newDeps = [];
+  this.depIds = new Set();
+  this.newDepIds = new Set();
 }
 
 Watcher.prototype.get = function () {};
