@@ -1,3 +1,11 @@
+/*
+ * @Author: Chris-Wen
+ * @Date: 2022-06-27 13:42:47
+ * @LastEditors: Chris-Wen
+ * @LastEditTime: 2022-07-04 10:55:09
+ */
+import { observe } from "./observer";
+
 export function initState(vm) {
   const opts = vm.$options;
 
@@ -41,9 +49,9 @@ function initData(vm) {
     //   //非生产环境 方法名与data中的key重名的冲突提示
     // }
     if (props && props.hasOwnProperty(key)) {
-      //props与data key同名冲突警告
+      console.warn("props与data key同名冲突警告");
     } else {
-      proxy(vm, "_data", key);
+      proxy(vm, "_data", key); //代理data， this[key]直接获取data中的数据 this[key] ===> this.data[key]
     }
   }
 
@@ -63,77 +71,4 @@ function observe(value, asRootData = false) {
   }
 
   return ob;
-}
-
-//观察者 ，它的作用是给对象的属性添加getter和setter，用于依赖的收集和派发更新
-function Observer(value) {
-  this.value = value;
-  this.dep = null;
-  this.vmCount = 0;
-
-  if (Array.isArray(value)) {
-    //修改__proto__, 重写数组的7个操作方法
-    protoNewArrProto(value);
-
-    this.observeArray(value);
-  } else {
-    this.walk(value);
-  }
-
-  function protoNewArrProto(value) {
-    const arrayProto = Array.prototype;
-    const arrayMethods = Object.create(arrayProto);
-
-    const methodsToPatch = [
-      "push",
-      "pop",
-      "shift",
-      "unshift",
-      "splice",
-      "sort",
-      "reverse",
-    ];
-
-    /**
-     * Intercept mutating methods and emit events
-     */
-    methodsToPatch.forEach(function (method) {
-      // cache original method
-      const original = arrayProto[method];
-      arrayMethods[method];
-    });
-
-    value.__proto__ = arrayMethods;
-  }
-}
-
-Observer.prototype.walk = function (value) {
-  for (const key in value) {
-    defineReactive(value, key, value[key]);
-  }
-};
-
-Observer.prototype.observeArray = function (value) {
-  //数组子项响应式
-  for (const key in value) {
-    observe(value[key]);
-  }
-};
-
-function defineReactive(target, key, value) {
-  observe(value);
-  Object.defineProperty(target, key, {
-    get: function () {
-      return value;
-    },
-    set: function (newVal) {
-      if (newVal !== value) {
-        //如果newVal是对象，继续加入响应式
-        observe(newVal);
-        value = newVal;
-        console.log(`派发更新{${key}: ${value}}`);
-        // dep.notify()
-      }
-    },
-  });
 }
