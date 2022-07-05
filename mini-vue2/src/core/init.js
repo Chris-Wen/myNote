@@ -2,7 +2,7 @@
  * @Author: Chris-Wen
  * @Date: 2022-06-27 13:42:29
  * @LastEditors: Chris-Wen
- * @LastEditTime: 2022-07-04 16:49:15
+ * @LastEditTime: 2022-07-05 09:35:27
  */
 import { initState } from "./initState";
 import { callHook, mountComponent } from "./lifecycle";
@@ -43,6 +43,10 @@ export function initMixin(Vue) {
       vm.$mount(vm.$options.el);
     }
   };
+
+  //引入patch
+  const patch = createPatchFunction();
+  Vue.prototype.__patch__ = patch;
 
   Vue.prototype.$mount = function (el, hydrating) {
     const vm = this;

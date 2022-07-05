@@ -5,7 +5,7 @@ import Watcher from "./observer/watcher";
  * @Author: Chris-Wen
  * @Date: 2022-06-27 13:43:03
  * @LastEditors: Chris-Wen
- * @LastEditTime: 2022-07-04 17:01:43
+ * @LastEditTime: 2022-07-05 09:24:15
  */
 export function initLifecycle(vm) {
   const options = vm.$options;
@@ -38,9 +38,11 @@ export function lifecycleMixin(Vue) {
     const prevVnode = vm._vnode;
 
     if (!prevVnode) {
+      console.log("init render");
       //初始化render
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating);
     } else {
+      console.log("updates");
       //updates
       vm.$el = vm.__patch__(prevVnode, vnode);
     }
@@ -83,6 +85,7 @@ export function mountComponent(vm, el, hydrating) {
     vm._update(vNodes, hydrating);
   };
 
+  //渲染watcher
   new Watcher(
     vm,
     updateComponent,
