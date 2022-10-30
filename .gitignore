@@ -1,6 +1,3 @@
-.vscode
-**/**/node_modules
-*/dist
-
-image
-wasu.md
+node_modules
+.cache
+.temp
