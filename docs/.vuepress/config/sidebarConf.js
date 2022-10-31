@@ -5,7 +5,7 @@ const sidebarConf = {
       title: "JAVASCRIPT",
       collapsable: false,
       sidebarDepth: 1,
-      children: ["README.md"],
+      children: ["READM"],
     },
   ],
 };

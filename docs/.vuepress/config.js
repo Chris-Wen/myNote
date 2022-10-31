@@ -2,6 +2,11 @@ import { defaultTheme } from "vuepress";
 import navConf from "./config/navConf";
 import sidebarConf from "./config/sidebarConf";
 import pluginConf from "./config/pluginConf";
+import { getDirname, path } from "@vuepress/utils";
+
+const __dirname = getDirname(import.meta.url);
+
+console.log(111, __dirname);
 
 export default {
   lang: "zh-CN",
@@ -10,11 +15,17 @@ export default {
   plugins: pluginConf,
   theme: defaultTheme({
     navbar: navConf,
-    sidebar: sidebarConf,
+    // sidebar: sidebarConf,
     docsDir: "docs",
     lastUpdatedText: "上次更新",
     contributorsText: "贡献者",
     editLinks: true,
     editLinkText: "编辑文档！",
   }),
+  markdown: {
+    importCode: {
+      handleImportPath: (str) =>
+        str.replace(/^@src/, path.resolve(__dirname, "../../src")),
+    },
+  },
 };
