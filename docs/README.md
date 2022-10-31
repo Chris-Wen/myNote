@@ -3,13 +3,15 @@ home: true
 # heroImage: /hero.png
 heroText: 好想好想努力
 tagline: 文档、笔记、博客
-actionText: 菜鸟之路 →
-actionLink: /guide/
+# actions:
+#   - text: 菜鸟之路 →
+#     link: /guide/
+#     type: primary
 
 footer: MIT Licensed | Copyright © 2022-present Chris Wen
 ---
 
-### 关于文档、笔记
+### 关于文档、笔记、博客
 
 ::: tip 知行合一太难
 这是一个个人笔记而已
