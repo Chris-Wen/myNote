@@ -2,10 +2,15 @@ const sidebarConf = {
   "/frontend/js": [
     {
       text: "JAVASCRIPT",
-      title: "JAVASCRIPT",
-      collapsable: false,
-      sidebarDepth: 1,
-      children: ["READM"],
+      collapsible: true,
+      children: ["README.md", "question.md"],
+    },
+  ],
+  "/algorithms": [
+    {
+      text: "Algorithm",
+      collapsible: false,
+      children: ["README.md"],
     },
   ],
 };

@@ -8,8 +8,8 @@ const navConf = [
       { text: "JavaScript", link: "/frontend/js/" },
       { text: "TypeScript", link: "/frontend/ts/" },
       { text: "Vue", link: "/frontend/vue/" },
-      { text: "Flutter", link: "/frontend/flutter/" },
       { text: "Webpack", link: "/frontend/webpack/" },
+      { text: "Flutter", link: "/frontend/flutter/" },
     ],
   },
   {
@@ -17,9 +17,9 @@ const navConf = [
     children: [
       { text: "Nodejs", link: "/backend/nodejs/" },
       { text: "Nginx", link: "/backend/nginx/" },
-      { text: "MySQL", link: "/backend/mysql/" },
-      { text: "Redis", link: "/backend/redis/" },
-      { text: "Docker", link: "/backend/docker/" },
+      // { text: "MySQL", link: "/backend/mysql/" },
+      // { text: "Redis", link: "/backend/redis/" },
+      // { text: "Docker", link: "/backend/docker/" },
     ],
   },
   { text: "算法", link: "/algorithms/" },

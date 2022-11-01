@@ -12,10 +12,10 @@ const pluginConf = [
   //vercel分析
   // inject(),
   //google分析
-  googleAnalyticsPlugin({
-    // 配置项
-    id: "",
-  }),
+  // googleAnalyticsPlugin({
+  //   // 配置项
+  //   id: "",
+  // }),
   //组件自动注册
   registerComponentsPlugin({
     // 配置项

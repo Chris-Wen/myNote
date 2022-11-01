@@ -6,8 +6,6 @@ import { getDirname, path } from "@vuepress/utils";
 
 const __dirname = getDirname(import.meta.url);
 
-console.log(111, __dirname);
-
 export default {
   lang: "zh-CN",
   title: "Hello World",
@@ -15,7 +13,7 @@ export default {
   plugins: pluginConf,
   theme: defaultTheme({
     navbar: navConf,
-    // sidebar: sidebarConf,
+    sidebar: sidebarConf,
     docsDir: "docs",
     lastUpdatedText: "上次更新",
     contributorsText: "贡献者",
