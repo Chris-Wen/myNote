@@ -1,28 +1,75 @@
-// //防抖
-function debounce(fn, date) {
-  let timer; //声明接收定时器的变量
-  return function (...arg) {
-    // 获取参数
-    timer && clearTimeout(timer); // 清空定时器
-    timer = setTimeout(() => {
-      //  生成新的定时器
-      //因为箭头函数里的this指向上层作用域的this,所以这里可以直接用this，不需要声明其他的变量来接收
-      fn.apply(this, arg); // fn()
-      timer = null;
-    }, date);
+/**
+ * debounce函数实现防抖
+ * @param {Function} fn - 需要执行的函数
+ * @param {Number} wait - 等待时间
+ * @param {Boolean} immediate - 是否立即执行
+ * @returns {Function} - 返回一个函数
+ */
+function debounce(fn, wait, immediate) {
+  let timer = null; // 定义一个计时器
+
+  return function (...args) { // 返回一个函数
+    let context = this; // 保存this指向
+    if (immediate && !timer) { // 如果是立即执行且计时器不存在
+      fn.apply(context, args); // 立即执行函数
+    }
+    if (timer) clearTimeout(timer); // 如果计时器存在，清除计时器
+    timer = setTimeout(() => { // 设置计时器
+      fn.apply(context, args); // 执行函数
+    }, wait);
   };
 }
 
-// 节流
-function throttle(fn, data) {
-  let timer = +new Date(); // 声明初始时间
-  return function (...arg) {
-    // 获取参数
-    let newTimer = +new Date(); // 获取触发事件的时间
-    if (newTimer - timer >= data) {
-      // 时间判断,是否满足条件
-      fn.apply(this, arg); // 调用需要执行的函数,修改this值,并且传入参数
-      timer = +new Date(); // 重置初始时间
+
+/**
+ * throttle函数实现节流
+ * @param {Function} fn - 需要执行的函数
+ * @param {Number} wait - 等待时间
+ * @returns {Function} - 返回一个函数
+ */
+function throttle(fn, wait) {
+  let timer = null; // 定义一个计时器
+  let previous = 0; // 上一次执行的时间
+
+  return function (...args) { // 返回一个函数
+    let context = this; // 保存this指向
+    let now = +new Date(); // 获取当前时间
+    let remaining = wait - (now - previous); // 计算剩余时间
+
+    if (remaining <= 0) { // 如果剩余时间小于等于0
+      if (timer) { // 如果计时器存在
+        clearTimeout(timer); // 清除计时器
+        timer = null; // 重置计时器
+      }
+      previous = now; // 更新上一次执行的时间
+      fn.apply(context, args); // 执行函数
+    } else if (!timer) { // 如果剩余时间大于0且计时器不存在
+      timer = setTimeout(() => { // 设置计时器
+        previous = +new Date(); // 更新上一次执行的时间
+        timer = null; // 重置计时器
+        fn.apply(context, args); // 执行函数
+      }, remaining);
+    }
+  };
+}
+ 
+ 
+/**
+ * 简写节流函数
+ * @param {Function} fn - 需要执行的函数
+ * @param {Number} wait - 等待时间
+ * @returns {Function} - 返回一个函数
+ */
+function throttle(fn, wait) {
+  let timer = null; // 定义一个计时器
+
+  return function (...args) { // 返回一个函数
+    let context = this; // 保存this指向
+    if (!timer) { // 如果计时器不存在
+      timer = setTimeout(() => { // 设置计时器
+        timer = null; // 重置计时器
+        fn.apply(context, args); // 执行函数
+      }, wait);
     }
   };
 }

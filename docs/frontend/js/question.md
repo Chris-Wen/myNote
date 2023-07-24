@@ -22,12 +22,12 @@ title: "奇技淫巧"
 
 解决方式：
 
-- a.toString
+- toString / valueOf: valueOf的优先级高于toString
 - Object.defineProperty / Proxy
 - 数组 join
 
 <CodeGroup>
-<CodeGroupItem title="1、toString">
+<CodeGroupItem title="1、toString / valueOf">
 
 ```javascript
 const a = {
@@ -35,8 +35,12 @@ const a = {
   toString() {
     return ++this.i;
   },
+  valueOf() {
+    return ++this.i;
+  }
 };
 console.log(a == 1 && a == 2 && a == 3); // true
+//以上示例中，会先触发valueOf方法，valueOf如果返回的不是原始值，会继续触发toString方法
 ```
 
 </CodeGroupItem>

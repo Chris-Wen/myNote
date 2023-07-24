@@ -64,11 +64,22 @@ title: Polyfill 实现
 
 - **原型链继承**: 让子类构造函数的 prototype 属性指向其父类构造函数的实例
   > Dog.prototype = new Animal()
+  - 原理：让子类构造函数的 prototype 属性指向其父类构造函数的实例
+  - 缺点：
+    - 引用类型的属性被所有实例共享
+    - 在创建子类实例时，无法向父类构造函数传参
 - **构造函数继承**
   > Animal.call(this)
+  - 原理：在子类构造函数中调用父类构造函数
+  - 优点：解决了原型链继承中子类实例共享父类引用类型属性的问题
+  - 缺点：无法实现父类原型上的属性和方法的复用
 - 组合式继承
+  - 原理：结合了原型链继承和构造函数继承的优点
+  - 缺点：调用了两次父类构造函数，生成了两份实例
 - 寄生组合式继承
+  - 原理：在组合式继承的基础上，通过 Object.create() 创建一个中间对象，避免了调用两次父类构造函数
 - class、extends 继承
+- class、super 继承
 
 <CodeGroup>
   <CodeGroupItem title="原型链/构造函数" active>
@@ -94,6 +105,7 @@ title: Polyfill 实现
   </CodeGroupItem>
 </CodeGroup>
 
+
 ### 节流、防抖
 
 > 频繁去触发一个事件, 不同的处理方式
@@ -106,12 +118,12 @@ title: Polyfill 实现
 <CodeGroup>
   <CodeGroupItem title="防抖" active>
 
-@[code{1-14}](@src/frontend/js/polyfill/debounce.js)
+@[code{1-21}](@src/frontend/js/polyfill/debounce.js)
 
   </CodeGroupItem>
   <CodeGroupItem title="节流">
 
-@[code{16-28}](@src/frontend/js/polyfill/debounce.js)
+@[code{24-}](@src/frontend/js/polyfill/debounce.js)
 
   </CodeGroupItem>
 

@@ -13,7 +13,7 @@ function bubbleSort(arr) {
   }
 }
 
-// 改进冒泡排序
+// 改进冒泡排序 --- 使用标识，遍历过程中再没有交换过程了就停止遍历，即所有排序已提前完成
 function bubbleSort1(arr) {
   for (let i = 0; i < arr.length; i++) {
     // 提前退出冒泡循环的标识位
